@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { Badge, Button, Drawer } from '@mui/material'
 import { useState } from 'react'
 import { useCart } from '../../hooks/useCart'
+
 const Header = ({ setOpenList }) => {
   const [open, setOpen] = useState(false)
   const { cart, removeFromCart, addToCart, totalPrice } = useCart()
@@ -24,7 +25,7 @@ const Header = ({ setOpenList }) => {
           </Badge>
         </Button>
       </div>
-      <Drawer sx={{ width: 300 }} open={open} anchor='right' onClose={() => setOpen(false)}>
+      <Drawer open={open} anchor='right' onClose={() => setOpen(false)}>
         <div className='container-cart'>
           {cart.map((product) => {
             return (

@@ -41,9 +41,8 @@
         align-items: center;
         flex-direction: column;
         gap: 30px;
-        border: solid 1px black;
         height: 100%;
-
+        width: 200px;
       }
       .list-filter-mobile li {
         list-style: none;

@@ -4,9 +4,9 @@ import './card.css'
 const CardProduct = ({ image, title, price, addToCart }) => {
   return (
     <Card
-      sx={{ width: 250, height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+      sx={{ width: 300, height: 450, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
     >
-      <CardMedia image={image} title={title} sx={{ width: 150, height: 150 }} />
+      <CardMedia image={image} title={title} sx={{ width: '100%', height: 350 }} />
       <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'left', gap: '10px' }}>
         <Typography variant='subtitle2'>{title}</Typography>
         <Typography variant='subtitle2'>Price: ${price}</Typography>

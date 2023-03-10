@@ -29,7 +29,7 @@ function App () {
           </li>
         </ul>
       </div>
-      <Drawer sx={{ width: 300 }} open={openList} anchor='left' onClose={() => setOpenList(false)}>
+      <Drawer open={openList} anchor='left' onClose={() => setOpenList(false)}>
         <ul className='list-filter-mobile'>
           <li onClick={() => setFilter('')}>All</li>
           <li onClick={() => setFilter('Electronics')}>
