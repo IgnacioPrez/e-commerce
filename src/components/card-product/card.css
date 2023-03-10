@@ -1,0 +1,11 @@
+.btn-add{
+    padding: .2em;
+    background-color: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    gap: 8px;
+}
