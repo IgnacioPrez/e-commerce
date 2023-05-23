@@ -1,69 +1,31 @@
-import { CardProduct, CardSkeleton, Header } from './components'
-import './app.css'
-import { useCart } from './hooks/useCart'
-import { useFilter } from './hooks/useFilter'
-import { Drawer } from '@mui/material'
-import { useState } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { PrivateRoutes, PublicRoutes } from './routes/routes'
+import { lazy, Suspense } from 'react'
+import { AuthGuard, Loader } from './components'
+import { FormLayout } from './layout'
+const Home = lazy(() => import('./pages/home/Home'))
+const Login = lazy(() => import('./pages/login/Login'))
+const Singup = lazy(() => import('./pages/signup/Singup'))
+const NotFound = lazy(() => import('./pages/not-found/NotFound'))
 
-function App () {
-  const { addToCart } = useCart()
-  const { products, isLoading, setFilter } = useFilter()
-  const [openList, setOpenList] = useState(false)
+const App = () => {
   return (
-    <div>
-      <Header setOpenList={setOpenList} />
-      <div className='filter-container'>
-        <ul className='list-filter'>
-          <li onClick={() => setFilter('')}>All</li>
-          <li onClick={() => setFilter('Electronics')}>
-            Electronics
-          </li>
-          <li onClick={() => setFilter('Jewelery')}>
-            Jewelery
-          </li>
-          <li onClick={() => setFilter("Men's clothing")}>
-            Men's clothing
-          </li>
-          <li onClick={() => setFilter("Women's clothing")}>
-            Women's clothing
-          </li>
-        </ul>
-      </div>
-      <Drawer open={openList} anchor='left' onClose={() => setOpenList(false)}>
-        <ul className='list-filter-mobile'>
-          <li onClick={() => setFilter('')}>All</li>
-          <li onClick={() => setFilter('Electronics')}>
-            Electronics
-          </li>
-          <li onClick={() => setFilter('Jewelery')}>
-            Jewelery
-          </li>
-          <li onClick={() => setFilter("Men's clothing")}>
-            Men's clothing
-          </li>
-          <li onClick={() => setFilter("Women's clothing")}>
-            Women's clothing
-          </li>
-        </ul>
-      </Drawer>
-      <div className='container-cards'>
-        {products.map((product) => {
-          return isLoading
-            ? (
-              <CardSkeleton key={product.id} />
-              )
-            : (
-              <CardProduct
-                key={product.id}
-                image={product.image}
-                price={product.price}
-                title={product.title}
-                addToCart={() => addToCart(product)}
-              />
-              )
-        })}
-      </div>
-    </div>
+    <Suspense fallback={<Loader />}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Navigate to={PrivateRoutes.HOME} />} />
+          <Route element={<FormLayout />}>
+            <Route path={PublicRoutes.LOGIN} element={<Login />} />
+            <Route path={PublicRoutes.REGISTER} element={<Singup />} />
+          </Route>
+
+          <Route element={<AuthGuard />}>
+            <Route path={PrivateRoutes.HOME} element={<Home />} />
+          </Route>
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </Suspense>
   )
 }
 

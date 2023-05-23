@@ -21,14 +21,7 @@
 .list-filter li:hover{
     color:#252525;
 }
-.container-cards{
-    display: flex;
-    flex-wrap: wrap;
-    gap:60px;
-    margin-top: 4em;
-    justify-content: center;
-    padding: .5em;
-}
+
 
 
 @media (max-width:768px){
