@@ -1,6 +1,7 @@
 import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import './card.css'
+
 const CardProduct = ({ image, title, price, addToCart }) => {
   return (
     <Card

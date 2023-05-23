@@ -1,3 +1,7 @@
+export * from './card-cart'
 export * from './card-product'
 export * from './card-skeleton'
+export * from './filter-product'
+export * from './guards'
 export * from './header-component'
+export * from './loader'
