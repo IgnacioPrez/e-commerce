@@ -11,8 +11,8 @@ const CartCard = ({ product }) => {
       <div className='card-cart'>
         <img src={product.image} alt={product.title} />
         <p>{product.title}</p>
-        <p>Quantity: {product.quantity}</p>
-        <p>Total price: ${product.price}</p>
+        <p>Cantidad: {product.quantity}</p>
+        <p>Precio total: ${product.price}</p>
         <div className='cart-btn'>
           <Button onClick={() => addToCart(product)} variant='contained' color='success'>
             <AddIcon />

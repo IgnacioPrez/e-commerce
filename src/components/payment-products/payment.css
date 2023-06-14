@@ -1,0 +1,152 @@
+.content-pay{
+    width: 100vw;
+    margin-top: 3em;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 10px; 
+}
+
+
+.item1 {
+    grid-column: 1 / span 3; 
+    color: #5A5A5A;
+    font-size: medium;
+    padding-left: 1em;
+    font-weight: 500;
+  }
+  
+  .item2 {
+    grid-column: 1 / span 2;
+
+  }
+  
+  .item3 {
+    grid-column: 3 / span 1; 
+  }
+
+.products-pay{
+    padding: 1em;
+    height: 100vh;
+    color: #343636;
+}
+
+.product-info-1{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.product-info-1 img {
+    width: 100px;
+    height: 100px;
+    padding: .5em;
+}
+.info-product-container{
+    display: grid;
+    grid-template-columns: 70% 10% 10% 10%; 
+    grid-gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+    margin-bottom: 1em;
+    padding: 1em;
+    align-items: center;
+    justify-content: center;
+}
+
+.description-product{
+    height: 100%;
+    font-weight: 500;
+    font-size: large;
+}
+
+.title-info{
+    color: #5A5A5A;
+    font-size: medium;
+    font-weight: 500;
+}
+
+.product-info-2{
+    display: flex;
+    align-items: center;
+}
+
+.product-info-3{
+    display: flex;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+}
+
+@media (max-width:968px){
+    .content-pay{
+        width: 100vw;
+        grid-gap: 20px; 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    
+    .item1 {
+        grid-column: 1 / span 3; 
+        padding-left: .3em;
+        font-weight: 500;
+      }
+      
+      .item2 {
+        grid-column: 1 / span 3;
+    
+      }
+      
+      .item3 {
+        grid-column: 3 / span 3; 
+      }
+    
+    .products-pay{
+        padding: 0em;
+        height: auto;
+        color: #343636;
+        width:85%;
+    }
+    
+    .product-info-1{
+        gap: 4px;
+    }
+    .product-info-1 p {
+        font-size: .8rem;
+    }
+    .product-info-1 img {
+        width: 80px;
+        height: 80px;
+        padding: .5em;
+    }
+    .info-product-container{
+        padding: 0;
+        gap: 0px;
+         grid-template-columns: 60% 12.5% 12.5% 12.5%; 
+    }
+    
+    .description-product{
+        height: 100%;
+        font-weight: 500;
+        font-size: large;
+    }
+    
+    .title-info{
+        display: none;
+    }
+    
+    .product-info-2{
+        display: flex;
+        align-items: center;
+        width: max-content;
+
+    }
+    
+    .product-info-3{
+        width: max-content;
+        margin-left: 2em;
+    }
+    
+}

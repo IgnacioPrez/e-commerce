@@ -4,18 +4,18 @@ const FilterProduct = ({ changeFilter }) => {
   return (
     <div className='filter-container'>
       <ul className='list-filter'>
-        <li onClick={() => changeFilter('')}>All</li>
+        <li onClick={() => changeFilter('')}>Todos</li>
         <li onClick={() => changeFilter('Electronics')}>
-          Electronics
+          Electronicos
         </li>
         <li onClick={() => changeFilter('Jewelery')}>
-          Jewelery
+          Joyas
         </li>
         <li onClick={() => changeFilter("Men's clothing")}>
-          Men's clothing
+          Prenda para hombre
         </li>
         <li onClick={() => changeFilter("Women's clothing")}>
-          Women's clothing
+          Prenda para mujer
         </li>
       </ul>
     </div>
