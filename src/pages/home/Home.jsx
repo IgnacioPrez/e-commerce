@@ -4,12 +4,10 @@ import { useCart } from '../../hooks/useCart'
 import { useState } from 'react'
 import { useFilter } from '../../hooks/useFilter'
 import { Slide } from '../../components/slide-images/Slide'
-
 function Home () {
   const { addToCart } = useCart()
   const { products, isLoading, setFilter } = useFilter()
   const [openList, setOpenList] = useState(false)
-
   const changeFilter = (category) => {
     setFilter(category)
   }

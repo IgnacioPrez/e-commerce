@@ -3,6 +3,7 @@ import { useCart } from '../../hooks/useCart'
 import { Checkout } from '../checkout'
 import './payment.css'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { Toaster } from 'react-hot-toast'
 
 const ProductsPayment = () => {
   const { cart, removeFromCart } = useCart()
@@ -38,6 +39,7 @@ const ProductsPayment = () => {
         })}
       </section>
       <Checkout />
+      <Toaster position='top-right' reverseOrder={false} />
     </div>
   )
 }

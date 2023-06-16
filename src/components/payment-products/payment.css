@@ -26,10 +26,13 @@
 
 .products-pay{
     padding: 1em;
-    height: 100vh;
     color: #343636;
+    overflow: auto;
+    max-height: 80vh;
 }
-
+.products-pay::-webkit-scrollbar {
+    display: none;
+}
 .product-info-1{
     display: flex;
     align-items: center;

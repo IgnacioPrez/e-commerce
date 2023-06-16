@@ -5,7 +5,7 @@ import { PublicRoutes } from '../../routes/routes'
 
 const AuthGuard = () => {
   const { user } = useContext(userContext)
-  return user.id ? <Outlet /> : <Navigate replace to={PublicRoutes.LOGIN} />
+  return user ? <Outlet /> : <Navigate replace to={PublicRoutes.LOGIN} />
 }
 
 export default AuthGuard

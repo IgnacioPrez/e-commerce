@@ -21,7 +21,7 @@ const Singup = () => {
     onSubmit: (values, { resetForm }) => {
       setUser({ ...values, id })
       saveToLocalStorage('user', { ...values, id })
-      alertSucces(`Welcome ${values.name} 😁`)
+      alertSucces(`Bienvenido ${values.name} ! 😁`)
       setTimeout(() => {
         navigate(PublicRoutes.LOGIN, { replace: true })
       }, 1000)
