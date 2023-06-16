@@ -1,5 +1,6 @@
 export const PrivateRoutes = {
-  HOME: '/Home'
+  HOME: '/Home',
+  PAY: '/Pay'
 }
 
 export const PublicRoutes = {

@@ -14,8 +14,6 @@ const UPDATE_STATE_BY_ACTION = {
   [CART_ACTION_TYPES.ADD_TO_CART]: (state, action) => {
     const { id } = action.payload
     const productInCartIndex = state.findIndex(item => item.id === id)
-    console.log(productInCartIndex)
-
     if (productInCartIndex >= 0) {
       const newState = [
         ...state.slice(0, productInCartIndex),

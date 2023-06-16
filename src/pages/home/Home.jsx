@@ -1,14 +1,13 @@
-import { CardProduct, CardSkeleton, FilterMobile, FilterProduct, Header } from '../../components'
+import { CardProduct, CardSkeleton, FilterMobile, FilterProduct, Footer, Header } from '../../components'
 import './home.css'
 import { useCart } from '../../hooks/useCart'
 import { useState } from 'react'
 import { useFilter } from '../../hooks/useFilter'
-
+import { Slide } from '../../components/slide-images/Slide'
 function Home () {
   const { addToCart } = useCart()
   const { products, isLoading, setFilter } = useFilter()
   const [openList, setOpenList] = useState(false)
-
   const changeFilter = (category) => {
     setFilter(category)
   }
@@ -17,6 +16,7 @@ function Home () {
       <Header setOpenList={setOpenList} />
       <FilterProduct changeFilter={changeFilter} />
       <FilterMobile openList={openList} setOpenList={setOpenList} changeFilter={changeFilter} />
+      <Slide />
       <div className='container-cards'>
         {products.map((product) => {
           return isLoading
@@ -34,6 +34,7 @@ function Home () {
               )
         })}
       </div>
+      <Footer />
     </div>
   )
 }

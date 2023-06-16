@@ -11,6 +11,7 @@ const Login = () => {
   const { user } = useContext(userContext)
   const navigate = useNavigate()
   const [error, setError] = useState('')
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const { email, password } = Object.fromEntries(new window.FormData(e.target))
@@ -18,15 +19,15 @@ const Login = () => {
       setError('The fields are Mandatory')
       return
     }
-    if (email.trim() === user.email && password.trim() === user.password) {
-      alertSucces(`It's good to have you back ${user.name} 😁`)
+    if (email === user.email && password === user.password) {
+      alertSucces(`Que bueno tenerte de nuevo ${user.name} 😁`)
       setError('')
       setTimeout(() => {
         navigate(PrivateRoutes.HOME, { replace: true })
       }, 1000)
     } else {
-      alertError('The credentials are incorrect')
-      setError('The credentials are incorrect')
+      alertError('Las credenciales son incorrectas')
+      setError('Las credenciales son incorrectas')
     }
   }
   return (

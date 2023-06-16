@@ -3,11 +3,12 @@ import { PrivateRoutes, PublicRoutes } from './routes/routes'
 import { lazy, Suspense } from 'react'
 import { AuthGuard, Loader } from './components'
 import { FormLayout } from './layout'
+
 const Home = lazy(() => import('./pages/home/Home'))
 const Login = lazy(() => import('./pages/login/Login'))
 const Singup = lazy(() => import('./pages/signup/Singup'))
 const NotFound = lazy(() => import('./pages/not-found/NotFound'))
-
+const Pay = lazy(() => import('./pages/payment/Pay'))
 const App = () => {
   return (
     <Suspense fallback={<Loader />}>
@@ -21,6 +22,7 @@ const App = () => {
 
           <Route element={<AuthGuard />}>
             <Route path={PrivateRoutes.HOME} element={<Home />} />
+            <Route path={PrivateRoutes.PAY} element={<Pay />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>

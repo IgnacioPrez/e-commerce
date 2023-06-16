@@ -51,7 +51,10 @@ const Header = ({ setOpenList }) => {
           }
         </div>
         <div className='total-price'>
-          <p>Total to be paid ${totalPrice.toFixed(2)}</p>
+          <p>Total a pagar: ${totalPrice.toFixed(2)}</p>
+          <Button variant='contained' size='medium' href='/Pay'>
+            Pagar
+          </Button>
         </div>
       </Drawer>
     </header>
