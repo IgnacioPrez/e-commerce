@@ -5,11 +5,11 @@ import './form-pay.css'
 import { allCountries } from '../../utilities/countries'
 import { useFormik } from 'formik'
 import { alertSucces } from '../../utilities/toastFunction'
-import { PrivateRoutes } from '../../routes/routes'
 import { useNavigate } from 'react-router-dom'
 import { initialValuesPay } from '../../formik/values'
 import { validationSchemaPay } from '../../formik/validateFormik'
 import { useCart } from '../../hooks/useCart'
+import { PublicRoutes } from '../../routes/routes'
 
 const FormPay = () => {
   const navigate = useNavigate()
@@ -19,14 +19,13 @@ const FormPay = () => {
     onSubmit: (values, { resetForm }) => {
       alertSucces('El pago se realizo correctamente ! 😁')
       setTimeout(() => {
-        navigate(PrivateRoutes.HOME, { replace: true })
+        navigate(PublicRoutes.HOME, { replace: true })
       }, 1000)
       resetForm()
       clearCart()
     },
     validationSchema: validationSchemaPay
   })
-  console.log(errors)
   return (
     <form className='form-pay' onSubmit={handleSubmit}>
       <div>
@@ -113,7 +112,7 @@ const FormPay = () => {
       <Button color='success' variant='contained' type='submit'>
         Pagar ahora
       </Button>
-      <Button color='secondary' variant='outlined' href='/Home'>
+      <Button color='secondary' variant='outlined' href='/'>
         Seguir comprando
       </Button>
     </form>

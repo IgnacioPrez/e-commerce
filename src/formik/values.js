@@ -1,9 +1,3 @@
-export const initialValuesSignup = {
-  name: '',
-  lastName: '',
-  email: '',
-  password: ''
-}
 
 export const initialValuesPay = {
   numberCard: '',
