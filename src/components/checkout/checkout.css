@@ -6,16 +6,23 @@
     padding: .5em;
     color: #5A5A5A;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    justify-content: center;
+    gap: 25px;
+    height: 100vh;
 }
-
+.complete-purchase p {
+    text-decoration: underline;
+    font-size: large;
+}
 
 @media (max-width:968px){
     .complete-purchase {
-        width:90vw;
-        margin: 0;
-        padding: 0;
+        width: 85vw;
+        height: auto;
+        margin: 0 auto;
         color: #5A5A5A;
         box-shadow: none;
+        gap: 10px;
         padding: 0em;
         justify-content: center;
     }

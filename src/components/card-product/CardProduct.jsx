@@ -19,7 +19,11 @@ const CardProduct = ({ image, title, price, addToCart }) => {
         sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'left', gap: '10px' }}
       >
         <Typography variant='subtitle2'>{title}</Typography>
-        <Typography variant='subtitle2'>Precio: ${price}</Typography>
+        <Typography variant='subtitle2'>Precio:{price.toLocaleString('es-AR', {
+          style: 'currency',
+          currency: 'ARS'
+        })}
+        </Typography>
         <Button onClick={addToCart} variant='contained' endIcon={<AddShoppingCartIcon />}>
           Agregar al carrito
         </Button>

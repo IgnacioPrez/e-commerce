@@ -1,121 +1,121 @@
-import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import React from 'react'
-import debitCards from '../../assets/tarjetas.png'
+import { Button, TextField } from '@mui/material'
 import './form-pay.css'
-import { allCountries } from '../../utilities/countries'
 import { useFormik } from 'formik'
-import { alertSucces } from '../../utilities/toastFunction'
-import { useNavigate } from 'react-router-dom'
 import { initialValuesPay } from '../../formik/values'
 import { validationSchemaPay } from '../../formik/validateFormik'
-import { useCart } from '../../hooks/useCart'
-import { PublicRoutes } from '../../routes/routes'
+import { postRequest } from '../../utilities/services'
+import { useDispatch } from 'react-redux'
+import { clearCart } from '../../redux/slices/cartSlices'
 
 const FormPay = () => {
-  const navigate = useNavigate()
-  const { clearCart } = useCart()
+  const dispatch = useDispatch()
   const { getFieldProps, handleSubmit, errors, touched } = useFormik({
     initialValues: initialValuesPay,
-    onSubmit: (values, { resetForm }) => {
-      alertSucces('El pago se realizo correctamente ! 😁')
-      setTimeout(() => {
-        navigate(PublicRoutes.HOME, { replace: true })
-      }, 1000)
-      resetForm()
-      clearCart()
+    onSubmit: async (values, { resetForm }) => {
+      const { data } = await postRequest(values, '/pay/create-payment')
+      if (data.init_point) {
+        window.location.href = data.init_point
+        resetForm()
+        dispatch(clearCart())
+      }
     },
     validationSchema: validationSchemaPay
   })
   return (
-    <form className='form-pay' onSubmit={handleSubmit}>
-      <div>
-        <img src={debitCards} alt='debit cards' />
-      </div>
-      <div>
-        <div className='headline'>
-          <p>Número de la tarjeta</p>
+    <div className='form-pay'>
+      <form className='form-container' onSubmit={handleSubmit}>
+        <div className='child'>
           <TextField
-            size='small'
-            type='password'
-            {...getFieldProps('numberCard')}
-            isError={touched.numberCard && errors.numberCard}
-            error={!!errors.numberCard && touched.numberCard}
+            label='Código de área'
+            variant='filled'
+            type='number'
+            {...getFieldProps('areaCode')}
+            iserror={touched.areaCode && errors.areaCode}
+            error={!!errors.areaCode && touched.areaCode}
+          />
+          <TextField
+            label='Número de teléfono'
+            variant='filled'
+            fullWidth
+            type='number'
+            {...getFieldProps('phoneNumber')}
+            iserror={touched.phoneNumber && errors.phoneNumber}
+            error={!!errors.phoneNumber && touched.phoneNumber}
           />
         </div>
-        <div className='headline'>
-          <p>Titular de la tarjeta</p>
+        <div className='child'>
           <TextField
-            type='text'
-            size='small'
-            {...getFieldProps('nameOfOwner')}
-            isError={touched.nameOfOwner && errors.nameOfOwner}
-            error={!!errors.nameOfOwner && touched.nameOfOwner}
+            label='Correo'
+            variant='filled'
+            fullWidth
+            {...getFieldProps('email')}
+            iserror={touched.email && errors.email}
+            error={!!errors.email && touched.email}
+          />
+          <TextField
+            label='DNI'
+            variant='filled'
+            fullWidth
+            type='number'
+            {...getFieldProps('dni')}
+            iserror={touched.dni && errors.dni}
+            error={!!errors.dni && touched.dni}
           />
         </div>
-      </div>
+        <div className='child'>
+          <TextField
+            label='Calle'
+            variant='filled'
+            fullWidth
+            {...getFieldProps('streetName')}
+            iserror={touched.streetName && errors.streetName}
+            error={!!errors.streetName && touched.streetName}
+          />
+          <TextField
+            label='Número de calle'
+            variant='filled'
+            type='number'
+            {...getFieldProps('streetNumber')}
+            iserror={touched.streetNumber && errors.streetNumber}
+            error={!!errors.streetNumber && touched.streetNumber}
+          />
+        </div>
+        <div className='child'>
+          <TextField
+            label='Nombre'
+            variant='filled'
+            fullWidth
+            {...getFieldProps('name')}
+            iserror={touched.name && errors.name}
+            error={!!errors.name && touched.name}
+          />
+          <TextField
+            label='Apellido'
+            variant='filled'
+            fullWidth
+            {...getFieldProps('surname')}
+            iserror={touched.surname && errors.surname}
+            error={!!errors.surname && touched.surname}
+          />
+        </div>
+        <div className='child'>
+          <TextField
+            label='Código postal'
+            variant='filled'
+            {...getFieldProps('zipCode')}
+            iserror={touched.zipCode && errors.zipCode}
+            error={!!errors.zipCode && touched.zipCode}
+          />
+        </div>
+        <Button color='success' variant='contained' type='submit'>
+          Pagar ahora
+        </Button>
+      </form>
 
-      <div>
-        <div className='headline'>
-          <p>Código de seguridad</p>
-          <TextField
-            type='number' size='small'
-            {...getFieldProps('codeOfSecurity')}
-            isError={touched.codeOfSecurity && errors.codeOfSecurity}
-            error={!!errors.codeOfSecurity && touched.codeOfSecurity}
-          />
-        </div>
-        <div className='headline'>
-          <p>Fecha de expiracion</p>
-          <input
-            type='date'
-            {...getFieldProps('minDate')}
-            isError={touched.minDate && errors.minDate}
-            error={!!errors.minDate && touched.minDate}
-          />
-          <span> - </span>
-          <input
-            type='date'
-            {...getFieldProps('maxDate')}
-            isError={touched.maxDate && errors.maxDate}
-            error={!!errors.maxDate && touched.maxDate}
-          />
-        </div>
-      </div>
-      <div>
-        <div className='headline'>
-          <p>Dirección</p>
-          <TextField
-            size='small'
-            {...getFieldProps('direction')}
-            isError={touched.direction && errors.direction}
-            error={!!errors.direction && touched.direction}
-          />
-        </div>
-        <div className='headline'>
-          <InputLabel id='select-countries'>Provincia</InputLabel>
-          <Select
-            label='Provincia'
-            size='small'
-            labelId='select-countries'
-            {...getFieldProps('city')}
-            isError={touched.city && errors.city}
-            error={!!errors.city && touched.city}
-          >
-            {allCountries.map((country) => (
-              <MenuItem key={country} value={country}>
-                {country}
-              </MenuItem>
-            ))}
-          </Select>
-        </div>
-      </div>
-      <Button color='success' variant='contained' type='submit'>
-        Pagar ahora
-      </Button>
-      <Button color='secondary' variant='outlined' href='/'>
+      <Button color='secondary' variant='contained' href='/'>
         Seguir comprando
       </Button>
-    </form>
+    </div>
   )
 }
 

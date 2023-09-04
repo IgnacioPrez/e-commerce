@@ -5,16 +5,16 @@ const FilterProduct = ({ changeFilter }) => {
     <div className='filter-container'>
       <ul className='list-filter'>
         <li onClick={() => changeFilter('')}>Todos</li>
-        <li onClick={() => changeFilter('Electronics')}>
+        <li onClick={() => changeFilter('technology')}>
           Electronicos
         </li>
-        <li onClick={() => changeFilter('Jewelery')}>
+        <li onClick={() => changeFilter('jewelry')}>
           Joyas
         </li>
-        <li onClick={() => changeFilter("Men's clothing")}>
+        <li onClick={() => changeFilter('garment for man')}>
           Prenda para hombre
         </li>
-        <li onClick={() => changeFilter("Women's clothing")}>
+        <li onClick={() => changeFilter('garment for woman')}>
           Prenda para mujer
         </li>
       </ul>

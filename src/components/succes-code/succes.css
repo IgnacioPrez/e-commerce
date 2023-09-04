@@ -1,0 +1,65 @@
+
+/* ESTILOS CUANDO EL CODIGO SEA VERIFICADO CORRECTAMENTE */
+
+/*.modal {
+  background: dodgerblue;
+  height: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: height 0.5s ease;
+  width: 100%;
+}
+
+.modal.active {
+  height: 100vh; 
+}
+
+.content {
+  color: white;
+  font-family: 'Consolas', arial, sans-serif;
+  font-size: 2em;
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translate3d(0, -50%, 0);
+  transition: color 0.5s ease;
+  width: 100%;
+}
+
+button {
+  background-color: dodgerblue;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 10px 20px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+}
+*/
+
+
+.succes-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    background-color: #E5E5E5;
+}
+.succes-container h2{
+    color: #1E232C;
+}
+.succes-container p {
+    color: #8391A1;
+}
+.succes-logo{
+    background-color: #18C07A;
+}

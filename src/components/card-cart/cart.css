@@ -7,12 +7,13 @@
     align-items: center;
     border-bottom: #b5b5b5 1px solid;
     padding-bottom: 1em;
+margin-top: .3em;
   }
   .card-cart p {
     width: 80%;
   }
   .card-cart img{
-    width: 8rem;
+    width: 5rem;
   }
   .cart-btn{
     display: flex;

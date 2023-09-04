@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getAllProducts, getProductsByCategory } from '../models/products.service'
+
 export function useFilter () {
   const [filter, setFilter] = useState('')
   const [products, setProducts] = useState([])
@@ -14,7 +15,7 @@ export function useFilter () {
           setProducts(allProduct)
         } else {
           setIsLoading(true)
-          const productCategory = await getProductsByCategory(filter.toLowerCase().trim())
+          const productCategory = await getProductsByCategory(filter.toLowerCase())
           setProducts(productCategory)
         }
       } catch (e) {

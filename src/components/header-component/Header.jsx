@@ -3,13 +3,25 @@ import SortIcon from '@mui/icons-material/Sort'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
 import { Badge, Button, Drawer } from '@mui/material'
 import { useState } from 'react'
-import { useCart } from '../../hooks/useCart'
-import { CartCard } from '../card-cart'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
+import PersonIcon from '@mui/icons-material/Person'
+import { Link } from 'react-router-dom'
+import { PrivateRoutes } from '../../routes/routes'
+import { logout } from '../../redux/slices/userSlices'
+import { persistStore } from 'redux-persist'
+import { store } from '../../redux/store/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { CartCard } from '../card-cart'
 
-const Header = ({ setOpenList }) => {
+const Header = ({ setOpenList, resetCart }) => {
   const [open, setOpen] = useState(false)
-  const { cart, totalPrice } = useCart()
+  const dispatch = useDispatch()
+  const { items, totalPrice } = useSelector((store) => store.cart)
+
+  const resetUser = () => {
+    dispatch(logout())
+    persistStore(store).purge()
+  }
 
   return (
     <header className='container-header'>
@@ -18,25 +30,44 @@ const Header = ({ setOpenList }) => {
       </div>
       <h1>O.o Store</h1>
       <div className='container-user'>
+        <PersonIcon />
         <Button variant='text' sx={{ color: '#000', position: 'realitve' }} onClick={() => setOpen(true)}>
-          <Badge badgeContent={cart.length} color='error'>
+          <Badge badgeContent={items.length} color='error'>
             <LocalMallIcon />
           </Badge>
         </Button>
-        <PowerSettingsNewIcon />
+        <PowerSettingsNewIcon onClick={resetUser} />
       </div>
       <Drawer open={open} anchor='right' onClose={() => setOpen(false)}>
         <div className='container-cart'>
-          {
-            cart.map((product) => <CartCard product={product} key={product.id} />)
-          }
+          {items && items.map((product) => <CartCard product={product.productId} quantity={product.quantity} resetCart={resetCart} key={product._id} />)}
         </div>
-        <div className='total-price'>
-          <p>Total a pagar: ${totalPrice.toFixed(2)}</p>
-          <Button variant='contained' size='medium' href='/Pay'>
-            Pagar
-          </Button>
-        </div>
+        {items.length > 0
+          ? (
+            <>
+              <div className='total-price'>
+                {totalPrice && (
+                  <p>
+                    Total a pagar:
+                    {totalPrice.toLocaleString('es-AR', {
+                      style: 'currency',
+                      currency: 'ARS'
+                    })}
+                  </p>
+                )}
+                <Button variant='contained' size='medium' sx={{ color: '#fff' }}>
+                  <Link to={`/${PrivateRoutes.PRIVATE}/${PrivateRoutes.PAY}`}>Pagar</Link>
+                </Button>
+              </div>
+            </>
+            )
+          : (
+            <>
+              <div className='total-price'>
+                <p>No tienes productos en el carrito</p>
+              </div>
+            </>
+            )}
       </Drawer>
     </header>
   )

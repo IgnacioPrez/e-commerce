@@ -1,23 +1,29 @@
 import * as Yup from 'yup'
-import { parse, isDate } from 'date-fns'
-
-function parseDateString (value, originalValue) {
-  const parsedDate = isDate(originalValue)
-    ? originalValue
-    : parse(originalValue, 'yyyy-MM-dd', new Date())
-
-  return parsedDate
-}
-
-const minYear = new Date('January 2013')
-const maxYear = new Date('December 2033')
 
 export const validationSchemaPay = Yup.object({
-  numberCard: Yup.number().required('Campo requerido'),
-  nameOfOwner: Yup.string().trim().required('Campo requerido'),
-  codeOfSecurity: Yup.number().min(100, 'credenciales invalidas'),
-  minDate: Yup.date().transform(parseDateString).min(minYear),
-  maxDate: Yup.date().transform(parseDateString).max(maxYear),
-  direction: Yup.string().trim().required('Campo requerido'),
-  city: Yup.string().required('Campo requerido')
+  phoneNumber: Yup.number().required('Campo requerido'),
+  areaCode: Yup.number().required('Campo requerido'),
+  dni: Yup.number().required('Campo requerido'),
+  streetName: Yup.string().required('Campo requerido'),
+  streetNumber: Yup.number().required('Campo requerido'),
+  zipCode: Yup.number().required('Campo requerido'),
+  email: Yup.string().email().trim().required('El correo es requerido'),
+  name: Yup.string().trim().required('Campo requerido'),
+  surname: Yup.string().trim().required('Campo requerido')
+
+})
+
+export const validationSchemaSignup = Yup.object({
+  fullName: Yup.string().trim().required('Campo requerido'),
+  dni: Yup.string().trim().required('Campo requerido'),
+  email: Yup.string().email().trim().required('El correo es requerido'),
+  password: Yup.string().matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial'
+  ).required('Contraseña requerida')
+})
+
+export const validationSchemaLogin = Yup.object({
+  email: Yup.string().email().trim().required('El correo es requerido'),
+  password: Yup.string().trim().required('Contraseña requerida')
 })
