@@ -32,7 +32,6 @@ export const patchRequest = async (endpoint, id) => {
         'x-token': token
       }
     })
-
     return response
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -52,11 +51,10 @@ export const getRequest = async (endpoint) => {
         'x-token': token
       }
     })
-
     return data
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
+      return error.response.status
     } else {
       return 'An unexpected error occurred'
     }

@@ -46,7 +46,7 @@ function Home () {
         {products.map((product) => {
           return isLoading
             ? (
-              <CardSkeleton key={product.id} />
+              <CardSkeleton key={product._id} />
               )
             : (
               <CardProduct
