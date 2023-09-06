@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getRequest } from '../../utilities/services'
 
 const initialState = {
   items: [],
@@ -15,7 +14,7 @@ const cartSlice = createSlice({
     },
     getCart: (state, action) => {
       const newState = {
-        items: action.payload.items,
+        items: action.payload.items ? action.payload.items : [],
         totalPrice: action.payload.totalPrice
       }
       return newState
@@ -25,12 +24,13 @@ const cartSlice = createSlice({
 export const { clearCart, getCart } = cartSlice.actions
 export default cartSlice.reducer
 
-export const getAllProductsInCart = () => async (dispatch) => {
+/* export const getAllProductsInCart = () => async (dispatch) => {
   try {
     const { cart } = await getRequest('/cart/')
+    console.log(cart)
     dispatch(getCart(cart))
     return
   } catch (error) {
     console.log(error)
   }
-}
+} */

@@ -2,10 +2,8 @@ import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
 const URL = import.meta.env.VITE_BASE_URL
-const storage = JSON.parse(window.localStorage.getItem('persist:root')) || ''
-const { token } = JSON.parse(storage.user || '{}')
 
-export const postRequest = async (data, endpoint) => {
+export const postRequest = async (data, endpoint, token) => {
   try {
     const result = await axios.post(URL + endpoint, data, {
       headers: {
@@ -14,7 +12,7 @@ export const postRequest = async (data, endpoint) => {
         'x-token': token
       }
     })
-
+    console.log(result)
     return result
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -25,7 +23,7 @@ export const postRequest = async (data, endpoint) => {
   }
 }
 
-export const patchRequest = async (endpoint, id) => {
+export const patchRequest = async (endpoint, id, token) => {
   try {
     const response = await axios.patch(`${URL}${endpoint}/${id}`, null, {
       headers: {
@@ -42,7 +40,7 @@ export const patchRequest = async (endpoint, id) => {
   }
 }
 
-export const getRequest = async (endpoint) => {
+export const getRequest = async (endpoint, token) => {
   try {
     const { data } = await axios.get(URL + endpoint, {
       headers: {
