@@ -5,26 +5,27 @@ import { useFilter } from '../../hooks/useFilter'
 import { Slide } from '../../components/slide-images/Slide'
 import { postRequest } from '../../utilities/services'
 import { Toaster, toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { getAllProductsInCart } from '../../redux/slices/cartSlices'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllProductsInCart } from '../../models/products.service'
 
 function Home () {
   const { products, isLoading, setFilter } = useFilter()
   const [openList, setOpenList] = useState(false)
   const dispatch = useDispatch()
+  const { token } = useSelector((store) => store.user)
 
   const resetCart = () => {
-    dispatch(getAllProductsInCart())
+    dispatch(getAllProductsInCart(token))
   }
 
   useEffect(() => {
-    dispatch(getAllProductsInCart())
+    dispatch(getAllProductsInCart(token))
   }, [])
 
   const addToCart = async (productId, quantity) => {
     const valuesReq = { productId, quantity }
     await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart'),
+      postRequest(valuesReq, '/cart/addInCart', token),
       {
         loading: 'Espere...',
         success: <b>Se agregó correctamente!</b>,

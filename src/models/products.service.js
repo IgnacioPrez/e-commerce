@@ -1,3 +1,6 @@
+import { getCart } from '../redux/slices/cartSlices'
+import { getRequest } from '../utilities/services'
+
 const URL = import.meta.env.VITE_BASE_URL
 
 export const getAllProducts = async () => {
@@ -17,5 +20,15 @@ export const getProductsByCategory = async (category) => {
     return products
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const getAllProductsInCart = (token) => async (dispatch) => {
+  try {
+    const { cart } = await getRequest('/cart/', token)
+    dispatch(getCart(cart))
+    return
+  } catch (error) {
+    console.log(error)
   }
 }

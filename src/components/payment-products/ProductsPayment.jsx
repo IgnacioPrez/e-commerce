@@ -5,18 +5,19 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { patchRequest } from '../../utilities/services'
-import { getAllProductsInCart } from '../../redux/slices/cartSlices'
+import { getAllProductsInCart } from '../../models/products.service'
 
 const ProductsPayment = () => {
   const { items } = useSelector((store) => store.cart)
+  const { token } = useSelector((store) => store.user)
   const dispatch = useDispatch()
   const resetCart = () => {
-    dispatch(getAllProductsInCart())
+    dispatch(getAllProductsInCart(token))
   }
 
   const removeFromCart = async (id) => {
     await toast.promise(
-      patchRequest('/cart/deletefromCartById', id),
+      patchRequest('/cart/deletefromCartById', id, token),
       {
         loading: 'Espere...',
         success: <b>Se elimino de su carrito!</b>,
@@ -35,9 +36,9 @@ const ProductsPayment = () => {
           <p>Precio</p>
           <p>Cantidad</p>
         </div>
-        {items.length > 0 && items.map(({ productId, quantity }) => {
+        {items.length > 0 && items.map(({ productId, quantity, _id }) => {
           return (
-            <div key={productId._id} className='info-product-container'>
+            <div key={_id} className='info-product-container'>
               <div className='product-info-1'>
                 <img src={productId.image.url} alt={productId.title} />
                 <div className='description-product'>
