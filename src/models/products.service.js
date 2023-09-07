@@ -14,10 +14,10 @@ export const getAllProducts = async () => {
 }
 
 export const getProductsByCategory = async (category) => {
-  const response = await fetch(`${URL}/products/filter?filterName=${category}`)
   try {
-    const { products } = await response.json()
-    return products
+    const response = await fetch(`${URL}/products/filter?filterName=${category}`)
+    const { filterProducts } = await response.json()
+    return filterProducts
   } catch (err) {
     console.log(err)
   }
