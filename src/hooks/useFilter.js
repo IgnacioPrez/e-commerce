@@ -5,7 +5,6 @@ export function useFilter () {
   const [filter, setFilter] = useState('')
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -15,7 +14,7 @@ export function useFilter () {
           setProducts(allProduct)
         } else {
           setIsLoading(true)
-          const productCategory = await getProductsByCategory(filter.toLowerCase())
+          const productCategory = await getProductsByCategory(filter)
           setProducts(productCategory)
         }
       } catch (e) {
