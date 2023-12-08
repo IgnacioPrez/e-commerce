@@ -38,7 +38,9 @@ const Header = ({ setOpenList, resetCart }) => {
         </Button>
         <PowerSettingsNewIcon onClick={resetUser} />
       </div>
-      <Drawer open={open} anchor='right' onClose={() => setOpen(false)}>
+      <Drawer
+        className='cart' open={open} anchor='right' onClose={() => setOpen(false)}
+      >
         <div className='container-cart'>
           {items && items.map((product) => <CartCard product={product.productId} quantity={product.quantity} resetCart={resetCart} key={product._id} />)}
         </div>

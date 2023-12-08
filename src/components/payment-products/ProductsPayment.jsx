@@ -15,6 +15,7 @@ const ProductsPayment = () => {
     dispatch(getAllProductsInCart(token))
   }
 
+  const convertPrice = (price) => price.toLocaleString('es-Ar', { style: 'currency', currency: 'ARS' })
   const removeFromCart = async (id) => {
     await toast.promise(
       patchRequest('/cart/deletefromCartById', id, token),
@@ -47,7 +48,7 @@ const ProductsPayment = () => {
                 </div>
               </div>
               <div className='product-info-2'>
-                <p>${productId.price}</p>
+                <p>{convertPrice(productId.price)}</p>
               </div>
               <div className='product-info-3'>
                 <p>{quantity}</p>
