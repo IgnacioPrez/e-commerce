@@ -1,16 +1,17 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-const URL = import.meta.env.VITE_BASE_URL
-
-export const postRequest = async (data, endpoint, token) => {
+// const URL = import.meta.env.VITE_BASE_URL
+const URL = 'http://localhost:8080'
+export const postRequest = async (data, endpoint) => {
   try {
     const result = await axios.post(URL + endpoint, data, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'x-token': token
-      }
+        Accept: 'application/json'
+
+      },
+      withCredentials: true
     })
     console.log(result)
     return result
@@ -26,9 +27,7 @@ export const postRequest = async (data, endpoint, token) => {
 export const patchRequest = async (endpoint, id, token) => {
   try {
     const response = await axios.patch(`${URL}${endpoint}/${id}`, null, {
-      headers: {
-        'x-token': token
-      }
+      withCredentials: true
     })
     return response
   } catch (error) {
@@ -43,11 +42,7 @@ export const patchRequest = async (endpoint, id, token) => {
 export const getRequest = async (endpoint, token) => {
   try {
     const { data } = await axios.get(URL + endpoint, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'x-token': token
-      }
+      withCredentials: true
     })
     return data
   } catch (error) {
@@ -83,7 +78,8 @@ export const auth = async (endpoint, data, message) => {
       const result = await axios.post(`${URL}/user${endpoint}`, data, {
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        withCredentials: true
       })
       return result.data
     } catch (error) {
@@ -100,4 +96,13 @@ export const auth = async (endpoint, data, message) => {
     success: message,
     error: 'Error al enviar el código'
   })
+}
+
+export const logoutUser = async (endpoint) => {
+  try {
+    const res = await axios.post(`${URL}/user${endpoint}`)
+    return res
+  } catch (err) {
+    console.error(err)
+  }
 }

@@ -5,7 +5,8 @@ const initialState = {
   token: '',
   dni: '',
   email: '',
-  verified: false
+  verified: false,
+  id: ''
 }
 
 const userSlice = createSlice({
@@ -19,6 +20,7 @@ const userSlice = createSlice({
       state.email = user.email
       state.fullName = user.fullName
       state.verified = user.verified
+      state.id = user._id
     },
     register: (state, action) => {
       const { email, fullName } = action.payload
