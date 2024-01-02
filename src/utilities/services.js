@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-// const URL = import.meta.env.VITE_BASE_URL
-const URL = 'http://localhost:8080'
+const URL = import.meta.env.VITE_BASE_URL
 export const postRequest = async (data, endpoint) => {
   try {
     const result = await axios.post(URL + endpoint, data, {
