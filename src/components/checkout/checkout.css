@@ -17,14 +17,14 @@
 
 @media (max-width:968px){
     .complete-purchase {
-        width: 85vw;
+        width: 100vw;
         height: auto;
-        margin: 0 auto;
         color: #5A5A5A;
         box-shadow: none;
         gap: 10px;
         padding: 0em;
         justify-content: center;
+        align-items: center;
     }
 
 }

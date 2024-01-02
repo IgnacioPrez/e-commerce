@@ -71,12 +71,14 @@
     visibility: visible;
   }
   .container-cart {
-    width: 100%;
     justify-content: center;
     align-items: center;
+    width: 300px;
 
   }
   .container-user > p {
     display: none;
   }
 }
+
+
