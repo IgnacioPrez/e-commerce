@@ -1,61 +1,15 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-const URL = import.meta.env.VITE_BASE_URL
+export const URL = import.meta.env.VITE_BASE_URL
+
+export const instance = axios.create({
+  withCredentials: true
+})
+
 export const postRequest = async (data, endpoint) => {
   try {
-    const result = await axios.post(URL + endpoint, data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-
-      },
-      withCredentials: true
-    })
-    console.log(result)
-    return result
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
-    } else {
-      return 'An unexpected error occurred'
-    }
-  }
-}
-
-export const patchRequest = async (endpoint, id, token) => {
-  try {
-    const response = await axios.patch(`${URL}${endpoint}/${id}`, null, {
-      withCredentials: true
-    })
-    return response
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
-    } else {
-      return 'An unexpected error occurred'
-    }
-  }
-}
-
-export const getRequest = async (endpoint, token) => {
-  try {
-    const { data } = await axios.get(URL + endpoint, {
-      withCredentials: true
-    })
-    return data
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return error.response.status
-    } else {
-      return 'An unexpected error occurred'
-    }
-  }
-}
-
-export const verifyEmail = async (endpoint, userData) => {
-  try {
-    const result = await axios.patch(`${URL}/user${endpoint}`, userData, {
+    const result = await instance.post(URL + endpoint, data, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -71,14 +25,64 @@ export const verifyEmail = async (endpoint, userData) => {
   }
 }
 
+export const patchRequest = async (endpoint, id, token) => {
+  try {
+    const response = await axios.patch(`${URL}${endpoint}/${id}`, { token }, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    })
+    return response
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message)
+    } else {
+      return 'An unexpected error occurred'
+    }
+  }
+}
+
+export const getRequest = async (endpoint) => {
+  try {
+    const { data } = await instance.get(URL + endpoint)
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response.status
+    } else {
+      return 'An unexpected error occurred'
+    }
+  }
+}
+
+export const verifyEmail = async (endpoint, userData) => {
+  try {
+    const result = await instance.patch(`${URL}/user${endpoint}`, userData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        credentials: 'include'
+      }
+    })
+    return result
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message)
+    } else {
+      return 'An unexpected error occurred'
+    }
+  }
+}
+
 export const auth = async (endpoint, data, message) => {
   const myPromise = async () => {
     try {
-      const result = await axios.post(`${URL}/user${endpoint}`, data, {
+      const result = await instance.post(`${URL}/user${endpoint}`, data, {
         headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
+          'Content-Type': 'application/json',
+          credentials: 'include'
+        }
       })
       return result.data
     } catch (error) {

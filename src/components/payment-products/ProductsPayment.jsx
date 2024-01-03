@@ -4,19 +4,25 @@ import './payment.css'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { patchRequest } from '../../utilities/services'
+import { getRequest, patchRequest } from '../../utilities/services'
 import { getAllProductsInCart } from '../../models/products.service'
+import { getCart } from '../../redux/slices/cartSlices'
 
 const ProductsPayment = () => {
   const { items } = useSelector((store) => store.cart)
-  const { token } = useSelector((store) => store.user)
   const dispatch = useDispatch()
-  const resetCart = () => {
-    dispatch(getAllProductsInCart(token))
+  const resetCart = async () => {
+    const { token } = await getRequest('/user/profile/')
+    if (token) {
+      const data = await getAllProductsInCart(token)
+      dispatch(getCart(data))
+    }
   }
 
   const convertPrice = (price) => price.toLocaleString('es-Ar', { style: 'currency', currency: 'ARS' })
   const removeFromCart = async (id) => {
+    const { token } = await getRequest('/user/profile/')
+
     await toast.promise(
       patchRequest('/cart/deletefromCartById', id, token),
       {
