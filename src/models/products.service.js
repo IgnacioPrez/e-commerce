@@ -1,7 +1,5 @@
-import { getCart } from '../redux/slices/cartSlices'
-import { getRequest } from '../utilities/services'
-
-const URL = import.meta.env.VITE_BASE_URL
+import axios from 'axios'
+import { URL } from '../utilities/services'
 
 export const getAllProducts = async () => {
   const response = await fetch(`${URL}/products/`)
@@ -23,12 +21,11 @@ export const getProductsByCategory = async (category) => {
   }
 }
 
-export const getAllProductsInCart = (token) => async (dispatch) => {
+export const getAllProductsInCart = async (token) => {
   try {
-    const { cart } = await getRequest('/cart/', token)
-    dispatch(getCart(cart))
-    return
+    const { data } = await axios.get(`${URL}/cart/`, { params: { token } })
+    return data.cart
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }

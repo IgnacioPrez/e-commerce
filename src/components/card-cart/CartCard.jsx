@@ -3,28 +3,29 @@ import './cart.css'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import { toast } from 'react-hot-toast'
-import { patchRequest, postRequest } from '../../utilities/services'
-import { useSelector } from 'react-redux'
+import { getRequest, patchRequest, postRequest } from '../../utilities/services'
 
 const CartCard = ({ product, quantity, resetCart }) => {
-  const { token } = useSelector((store) => store.user)
-
   const removeFromCart = async (id) => {
-    await toast.promise(
-      patchRequest('/cart/deletefromCartById', id, token),
-      {
-        loading: 'Espere...',
-        success: <b>Se elimino de su carrito!</b>,
-        error: <b>Ocurrio un problema.</b>
-      }
-    )
-    resetCart()
+    const { token } = await getRequest('/user/profile/')
+    if (token) {
+      await toast.promise(
+        patchRequest('/cart/deletefromCartById', id, token),
+        {
+          loading: 'Espere...',
+          success: <b>Se elimino de su carrito!</b>,
+          error: <b>Ocurrio un problema.</b>
+        }
+      )
+      resetCart()
+    }
   }
 
   const addInCart = async (productId, quantity) => {
-    const valuesReq = { productId, quantity }
+    const { token } = await getRequest('/user/profile/')
+    const valuesReq = { productId, quantity, token }
     await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart', token),
+      postRequest(valuesReq, '/cart/addInCart'),
       {
         loading: 'Espere...',
         success: <b>Se agregó correctamente!</b>,

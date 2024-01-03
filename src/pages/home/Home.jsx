@@ -3,29 +3,41 @@ import './home.css'
 import { useEffect, useState } from 'react'
 import { useFilter } from '../../hooks/useFilter'
 import { Slide } from '../../components/slide-images/Slide'
-import { postRequest } from '../../utilities/services'
+import { getRequest, postRequest } from '../../utilities/services'
 import { Toaster, toast } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getAllProductsInCart } from '../../models/products.service'
+import { getCart } from '../../redux/slices/cartSlices'
 
 function Home () {
   const { products, isLoading, setFilter } = useFilter()
   const [openList, setOpenList] = useState(false)
   const dispatch = useDispatch()
-  const { token } = useSelector((store) => store.user)
 
-  const resetCart = () => {
-    dispatch(getAllProductsInCart(token))
+  const resetCart = async () => {
+    const { token } = await getRequest('/user/profile/')
+    if (token) {
+      const data = await getAllProductsInCart(token)
+      dispatch(getCart(data))
+    }
   }
 
   useEffect(() => {
-    dispatch(getAllProductsInCart(token))
+    const showProducts = async () => {
+      const { token } = await getRequest('/user/profile/')
+      if (token) {
+        const data = await getAllProductsInCart(token)
+        dispatch(getCart(data))
+      }
+    }
+    showProducts()
   }, [])
 
   const addToCart = async (productId, quantity) => {
-    const valuesReq = { productId, quantity }
+    const { token } = await getRequest('/user/profile/')
+    const valuesReq = { productId, quantity, token }
     await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart', token),
+      postRequest(valuesReq, '/cart/addInCart'),
       {
         loading: 'Espere...',
         success: <b>Se agregó correctamente!</b>,

@@ -3,7 +3,7 @@ import './form-pay.css'
 import { useFormik } from 'formik'
 import { initialValuesPay } from '../../formik/values'
 import { validationSchemaPay } from '../../formik/validateFormik'
-import { postRequest } from '../../utilities/services'
+import { getRequest, postRequest } from '../../utilities/services'
 import { useDispatch } from 'react-redux'
 import { clearCart } from '../../redux/slices/cartSlices'
 
@@ -12,7 +12,9 @@ const FormPay = () => {
   const { getFieldProps, handleSubmit, errors, touched } = useFormik({
     initialValues: initialValuesPay,
     onSubmit: async (values, { resetForm }) => {
-      const { data } = await postRequest(values, '/pay/create-payment')
+      const { token } = await getRequest('/user/profile/')
+      const newValues = { ...values, token }
+      const { data } = await postRequest(newValues, '/pay/create-payment')
       if (data.init_point) {
         window.location.href = data.init_point
         resetForm()

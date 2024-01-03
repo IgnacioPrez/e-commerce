@@ -23,14 +23,3 @@ const cartSlice = createSlice({
 })
 export const { clearCart, getCart } = cartSlice.actions
 export default cartSlice.reducer
-
-/* export const getAllProductsInCart = () => async (dispatch) => {
-  try {
-    const { cart } = await getRequest('/cart/')
-    console.log(cart)
-    dispatch(getCart(cart))
-    return
-  } catch (error) {
-    console.log(error)
-  }
-} */
