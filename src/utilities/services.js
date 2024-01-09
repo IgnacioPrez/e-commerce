@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-export const URL = import.meta.env.VITE_BASE_URL
-
+// export const URL = import.meta.env.VITE_BASE_URL
+export const URL = 'http://localhost:8080'
 export const instance = axios.create({
   withCredentials: true
 })
@@ -61,8 +61,7 @@ export const verifyEmail = async (endpoint, userData) => {
     const result = await instance.patch(`${URL}/user${endpoint}`, userData, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        credentials: 'include'
+        Accept: 'application/json'
       }
     })
     return result
@@ -80,8 +79,7 @@ export const auth = async (endpoint, data, message) => {
     try {
       const result = await instance.post(`${URL}/user${endpoint}`, data, {
         headers: {
-          'Content-Type': 'application/json',
-          credentials: 'include'
+          'Content-Type': 'application/json'
         }
       })
       return result.data
