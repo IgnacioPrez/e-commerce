@@ -23,7 +23,11 @@ export const getProductsByCategory = async (category) => {
 
 export const getAllProductsInCart = async (token) => {
   try {
-    const { data } = await axios.get(`${URL}/cart/`, { params: { token } })
+    const { data } = await axios.get(`${URL}/cart/`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     return data.cart
   } catch (error) {
     console.error(error)

@@ -35,9 +35,10 @@ function Home () {
 
   const addToCart = async (productId, quantity) => {
     const { token } = await getRequest('/user/profile/')
-    const valuesReq = { productId, quantity, token }
+    console.log(token)
+    const valuesReq = { productId, quantity }
     await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart'),
+      postRequest(valuesReq, '/cart/addInCart', token),
       {
         loading: 'Espere...',
         success: <b>Se agregó correctamente!</b>,

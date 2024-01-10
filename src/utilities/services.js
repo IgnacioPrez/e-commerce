@@ -1,18 +1,18 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-export const URL = import.meta.env.VITE_BASE_URL
+// export const URL = import.meta.env.VITE_BASE_URL
+export const URL = 'http://localhost:8080'
+const { user } = JSON.parse(window.localStorage.getItem('persist:root'))
+const { refreshToken } = JSON.parse(user)
 
-export const instance = axios.create({
-  withCredentials: true
-})
-
-export const postRequest = async (data, endpoint) => {
+export const postRequest = async (data, endpoint, token) => {
   try {
-    const result = await instance.post(URL + endpoint, data, {
+    const result = await axios.post(URL + endpoint, data, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
       }
     })
     return result
@@ -25,12 +25,13 @@ export const postRequest = async (data, endpoint) => {
   }
 }
 
-export const patchRequest = async (endpoint, id, token) => {
+export const deleteFromCart = async (endpoint, id, token) => {
   try {
-    const response = await axios.patch(`${URL}${endpoint}/${id}`, { token }, {
+    const response = await axios.post(`${URL}${endpoint}/${id}`, null, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
       }
     })
     return response
@@ -38,14 +39,18 @@ export const patchRequest = async (endpoint, id, token) => {
     if (axios.isAxiosError(error)) {
       throw new Error(error.message)
     } else {
-      return 'An unexpected error occurred'
+      return 'Ocurrió un error inesperado'
     }
   }
 }
 
 export const getRequest = async (endpoint) => {
   try {
-    const { data } = await instance.get(URL + endpoint)
+    const { data } = await axios.get(URL + endpoint, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`
+      }
+    })
     return data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -58,7 +63,7 @@ export const getRequest = async (endpoint) => {
 
 export const verifyEmail = async (endpoint, userData) => {
   try {
-    const result = await instance.patch(`${URL}/user${endpoint}`, userData, {
+    const result = await axios.patch(`${URL}/user${endpoint}`, userData, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -77,7 +82,7 @@ export const verifyEmail = async (endpoint, userData) => {
 export const auth = async (endpoint, data, message) => {
   const myPromise = async () => {
     try {
-      const result = await instance.post(`${URL}/user${endpoint}`, data, {
+      const result = await axios.post(`${URL}/user${endpoint}`, data, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -97,13 +102,4 @@ export const auth = async (endpoint, data, message) => {
     success: message,
     error: 'Error al enviar el código'
   })
-}
-
-export const logoutUser = async (endpoint) => {
-  try {
-    const res = await axios.post(`${URL}/user${endpoint}`)
-    return res
-  } catch (err) {
-    console.error(err)
-  }
 }
