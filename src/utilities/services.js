@@ -27,7 +27,7 @@ export const postRequest = async (data, endpoint) => {
 
 export const patchRequest = async (endpoint, id, token) => {
   try {
-    const response = await axios.patch(`${URL}${endpoint}/${id}`, { token }, {
+    const response = await instance.patch(`${URL}${endpoint}/${id}`, { token }, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -43,9 +43,9 @@ export const patchRequest = async (endpoint, id, token) => {
   }
 }
 
-export const getRequest = async (endpoint) => {
+export const getToken = async (endpoint) => {
   try {
-    const { data } = await instance.get(URL + endpoint)
+    const { data } = await instance.post(URL + endpoint)
     return data
   } catch (error) {
     if (axios.isAxiosError(error)) {
