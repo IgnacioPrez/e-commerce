@@ -13,8 +13,7 @@ export const postRequest = async (data, endpoint, token) => {
         Accept: 'application/json',
         'x-token': token
 
-      },
-      withCredentials: true
+      }
     })
     return result
   } catch (error) {
@@ -33,8 +32,7 @@ export const deleteFromCart = async (endpoint, id, token) => {
 
         'x-token': token,
         'Content-Type': 'application/json'
-      },
-      withCredentials: true
+      }
     })
     return
   } catch (error) {
@@ -88,8 +86,7 @@ export const auth = async (endpoint, data, message) => {
       const result = await axios.post(`${URL}/user${endpoint}`, data, {
         headers: {
           'Content-Type': 'application/json'
-        },
-        withCredentials: true
+        }
       })
       return result.data
     } catch (error) {
