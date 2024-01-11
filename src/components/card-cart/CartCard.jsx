@@ -3,6 +3,7 @@ import './cart.css'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import { toast } from 'react-hot-toast'
+
 import { getToken, deleteFromCart, postRequest } from '../../utilities/services'
 
 const CartCard = ({ product, quantity, resetCart }) => {
@@ -26,6 +27,7 @@ const CartCard = ({ product, quantity, resetCart }) => {
   const addInCart = async (productId, quantity) => {
     const { token } = await getToken('/user/profile/')
     const valuesReq = { productId, quantity }
+
     await toast.promise(
       postRequest(valuesReq, '/cart/addInCart', token),
       {
