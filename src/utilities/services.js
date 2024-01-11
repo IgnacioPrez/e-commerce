@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-export const URL = import.meta.env.VITE_BASE_URL
+// export const URL = import.meta.env.VITE_BASE_URL
+export const URL = 'http://localhost:8080'
 const { user } = JSON.parse(window.localStorage.getItem('persist:root'))
 const { refreshToken } = JSON.parse(user)
 
@@ -46,7 +47,7 @@ export const deleteFromCart = async (endpoint, id, token) => {
 
 export const getToken = async (endpoint) => {
   try {
-    const { data } = await axios.post(URL + endpoint, {
+    const { data } = await axios.get(URL + endpoint, {
       headers: {
         'x-token': refreshToken,
         'Content-Type': 'application/json'
