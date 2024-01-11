@@ -16,8 +16,7 @@ const FormPay = () => {
     initialValues: initialValuesPay,
     onSubmit: async (values, { resetForm }) => {
       const { token } = await getToken('/user/profile/', refreshToken)
-      const newValues = { ...values, token }
-      const { data } = await postRequest(newValues, '/pay/create-payment')
+      const { data } = await postRequest(values, '/pay/create-payment', token)
       if (data.init_point) {
         window.location.href = data.init_point
         resetForm()

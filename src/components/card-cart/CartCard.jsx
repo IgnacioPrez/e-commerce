@@ -25,7 +25,7 @@ const CartCard = ({ product, quantity, resetCart }) => {
     }
   }
   const addInCart = async (productId, quantity) => {
-    const { token } = await getToken('/user/profile/')
+    const { token } = await getToken('/user/profile/', refreshToken)
     const valuesReq = { productId, quantity }
 
     await toast.promise(postRequest(valuesReq, '/cart/addInCart', token), {
