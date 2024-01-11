@@ -4,7 +4,7 @@ import './payment.css'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { getToken, patchRequest } from '../../utilities/services'
+import { getToken, deleteFromCart } from '../../utilities/services'
 import { getAllProductsInCart } from '../../models/products.service'
 import { getCart } from '../../redux/slices/cartSlices'
 
@@ -24,7 +24,7 @@ const ProductsPayment = () => {
     const { token } = await getToken('/user/profile/')
 
     await toast.promise(
-      patchRequest('/cart/deletefromCartById', id, token),
+      deleteFromCart('/cart/deletefromCartById', id, token),
       {
         loading: 'Espere...',
         success: <b>Se elimino de su carrito!</b>,

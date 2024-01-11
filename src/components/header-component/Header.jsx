@@ -12,7 +12,6 @@ import { persistStore } from 'redux-persist'
 import { store } from '../../redux/store/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { CartCard } from '../card-cart'
-import { logoutUser } from '../../utilities/services'
 
 const Header = ({ setOpenList, resetCart }) => {
   const [open, setOpen] = useState(false)
@@ -22,7 +21,6 @@ const Header = ({ setOpenList, resetCart }) => {
   const resetUser = async () => {
     dispatch(logout())
     persistStore(store).purge()
-    logoutUser('/logout')
   }
 
   return (

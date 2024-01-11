@@ -3,29 +3,33 @@ import './cart.css'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import { toast } from 'react-hot-toast'
-import { getToken, patchRequest, postRequest } from '../../utilities/services'
+
+import { getToken, deleteFromCart, postRequest } from '../../utilities/services'
 
 const CartCard = ({ product, quantity, resetCart }) => {
   const removeFromCart = async (id) => {
-    const { token } = await getToken('/user/profile/')
-    if (token) {
+    try {
+      const { token } = await getToken('/user/profile/')
       await toast.promise(
-        patchRequest('/cart/deletefromCartById', id, token),
+        deleteFromCart('/cart/deletefromCartById', id, token),
         {
           loading: 'Espere...',
-          success: <b>Se elimino de su carrito!</b>,
-          error: <b>Ocurrio un problema.</b>
+          success: <b>Se eliminó de su carrito!</b>,
+          error: <b>Ocurrió un problema.</b>
         }
       )
       resetCart()
+    } catch (error) {
+      console.error('Error al eliminar del carrito:', error)
+      toast.error('Ocurrió un error inesperado')
     }
   }
-
   const addInCart = async (productId, quantity) => {
     const { token } = await getToken('/user/profile/')
-    const valuesReq = { productId, quantity, token }
+    const valuesReq = { productId, quantity }
+
     await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart'),
+      postRequest(valuesReq, '/cart/addInCart', token),
       {
         loading: 'Espere...',
         success: <b>Se agregó correctamente!</b>,

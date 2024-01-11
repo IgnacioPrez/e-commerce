@@ -35,16 +35,18 @@ function Home () {
 
   const addToCart = async (productId, quantity) => {
     const { token } = await getToken('/user/profile/')
-    const valuesReq = { productId, quantity, token }
-    await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart'),
-      {
-        loading: 'Espere...',
-        success: <b>Se agregó correctamente!</b>,
-        error: <b>Ocurrio un problema.</b>
-      }
-    )
-    resetCart()
+    if (token) {
+      const valuesReq = { productId, quantity }
+      await toast.promise(
+        postRequest(valuesReq, '/cart/addInCart', token),
+        {
+          loading: 'Espere...',
+          success: <b>Se agregó correctamente!</b>,
+          error: <b>Ocurrio un problema.</b>
+        }
+      )
+      resetCart()
+    }
   }
   const changeFilter = (category) => {
     setFilter(category)

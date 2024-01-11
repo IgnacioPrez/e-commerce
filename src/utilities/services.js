@@ -2,15 +2,20 @@ import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
 export const URL = import.meta.env.VITE_BASE_URL
+const { user } = JSON.parse(window.localStorage.getItem('persist:root'))
+const { refreshToken } = JSON.parse(user)
 
-export const postRequest = async (data, endpoint) => {
+
+export const postRequest = async (data, endpoint, token) => {
+
   try {
     const result = await axios.post(URL + endpoint, data, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      withCredentials: true
+        Accept: 'application/json',
+        'x-token': token
+
+      }
     })
     return result
   } catch (error) {
@@ -22,19 +27,19 @@ export const postRequest = async (data, endpoint) => {
   }
 }
 
-export const patchRequest = async (endpoint, id, token) => {
+export const deleteFromCart = async (endpoint, id, token) => {
   try {
-    const response = await axios.patch(`${URL}${endpoint}/${id}`, { token }, {
+    await axios.delete(`${URL}${endpoint}/${id}`, {
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      withCredentials: true
+
+        'x-token': token,
+        'Content-Type': 'application/json'
+      }
     })
-    return response
+    return
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
+      return error.response.status
     } else {
       return 'An unexpected error occurred'
     }
@@ -43,7 +48,13 @@ export const patchRequest = async (endpoint, id, token) => {
 
 export const getToken = async (endpoint) => {
   try {
-    const { data } = await axios.post(URL + endpoint)
+
+    const { data } = await axios.get(URL + endpoint, {
+      headers: {
+        'x-token': refreshToken,
+        'Content-Type': 'application/json'
+      }
+    })
     return data
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -96,13 +107,4 @@ export const auth = async (endpoint, data, message) => {
     success: message,
     error: 'Error al enviar el código'
   })
-}
-
-export const logoutUser = async (endpoint) => {
-  try {
-    const res = await axios.post(`${URL}/user${endpoint}`)
-    return res
-  } catch (err) {
-    console.error(err)
-  }
 }

@@ -7,7 +7,8 @@ export const getAllProducts = async () => {
     const result = await response.json()
     return result.products
   } catch (err) {
-    console.log(err)
+    console.error(err)
+    throw new Error('Server Error')
   }
 }
 
@@ -18,14 +19,20 @@ export const getProductsByCategory = async (category) => {
     return filterProducts
   } catch (err) {
     console.log(err)
+    throw new Error('Server Error')
   }
 }
 
 export const getAllProductsInCart = async (token) => {
   try {
-    const { data } = await axios.get(`${URL}/cart/`, { params: { token } })
+    const { data } = await axios.get(`${URL}/cart/`, {
+      headers: {
+        'x-token': token
+      }
+    })
     return data.cart
   } catch (error) {
     console.error(error)
+    throw new Error('Server Error')
   }
 }
