@@ -5,9 +5,7 @@ export const URL = import.meta.env.VITE_BASE_URL
 const { user } = JSON.parse(window.localStorage.getItem('persist:root'))
 const { refreshToken } = JSON.parse(user)
 
-
 export const postRequest = async (data, endpoint, token) => {
-
   try {
     const result = await axios.post(URL + endpoint, data, {
       headers: {
@@ -48,8 +46,7 @@ export const deleteFromCart = async (endpoint, id, token) => {
 
 export const getToken = async (endpoint) => {
   try {
-
-    const { data } = await axios.get(URL + endpoint, {
+    const { data } = await axios.post(URL + endpoint, {
       headers: {
         'x-token': refreshToken,
         'Content-Type': 'application/json'
