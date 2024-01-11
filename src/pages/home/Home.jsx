@@ -5,7 +5,7 @@ import { useFilter } from '../../hooks/useFilter'
 import { Slide } from '../../components/slide-images/Slide'
 import { getToken, postRequest } from '../../utilities/services'
 import { Toaster, toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllProductsInCart } from '../../models/products.service'
 import { getCart } from '../../redux/slices/cartSlices'
 
@@ -13,9 +13,11 @@ function Home () {
   const { products, isLoading, setFilter } = useFilter()
   const [openList, setOpenList] = useState(false)
   const dispatch = useDispatch()
+  const userStore = useSelector((store) => store.user)
+  const { refreshToken } = userStore
 
   const resetCart = async () => {
-    const { token } = await getToken('/user/profile/')
+    const { token } = await getToken('/user/profile/', refreshToken)
     if (token) {
       const data = await getAllProductsInCart(token)
       dispatch(getCart(data))
@@ -24,7 +26,7 @@ function Home () {
 
   useEffect(() => {
     const showProducts = async () => {
-      const { token } = await getToken('/user/profile/')
+      const { token } = await getToken('/user/profile/', refreshToken)
       if (token) {
         const data = await getAllProductsInCart(token)
         dispatch(getCart(data))
@@ -34,7 +36,7 @@ function Home () {
   }, [])
 
   const addToCart = async (productId, quantity) => {
-    const { token } = await getToken('/user/profile/')
+    const { token } = await getToken('/user/profile/', refreshToken)
     if (token) {
       const valuesReq = { productId, quantity }
       await toast.promise(

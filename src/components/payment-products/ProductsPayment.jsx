@@ -10,9 +10,12 @@ import { getCart } from '../../redux/slices/cartSlices'
 
 const ProductsPayment = () => {
   const { items } = useSelector((store) => store.cart)
+  const userStore = useSelector((store) => store.user)
+  const { refreshToken } = userStore
   const dispatch = useDispatch()
+
   const resetCart = async () => {
-    const { token } = await getToken('/user/profile/')
+    const { token } = await getToken('/user/profile/', refreshToken)
     if (token) {
       const data = await getAllProductsInCart(token)
       dispatch(getCart(data))
@@ -21,7 +24,7 @@ const ProductsPayment = () => {
 
   const convertPrice = (price) => price.toLocaleString('es-Ar', { style: 'currency', currency: 'ARS' })
   const removeFromCart = async (id) => {
-    const { token } = await getToken('/user/profile/')
+    const { token } = await getToken('/user/profile/', refreshToken)
 
     await toast.promise(
       deleteFromCart('/cart/deletefromCartById', id, token),

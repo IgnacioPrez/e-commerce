@@ -32,7 +32,6 @@ export default function FormLogin () {
     onSubmit: async (values, { resetForm }) => {
       const result = await auth('/login', values, 'Bienvenido 😁!')
       if (result) {
-        console.log(result)
         dispatch(loginUser(result))
         resetForm()
         setTimeout(() => {

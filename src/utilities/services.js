@@ -2,8 +2,6 @@ import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
 export const URL = import.meta.env.VITE_BASE_URL
-const { user } = JSON.parse(window.localStorage.getItem('persist:root')) || ''
-const { refreshToken } = JSON.parse(user) || ''
 
 export const postRequest = async (data, endpoint, token) => {
   try {
@@ -44,7 +42,7 @@ export const deleteFromCart = async (endpoint, id, token) => {
   }
 }
 
-export const getToken = async (endpoint) => {
+export const getToken = async (endpoint, refreshToken) => {
   try {
     const { data } = await axios.get(URL + endpoint, {
       headers: {

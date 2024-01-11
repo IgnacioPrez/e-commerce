@@ -4,15 +4,18 @@ import { useFormik } from 'formik'
 import { initialValuesPay } from '../../formik/values'
 import { validationSchemaPay } from '../../formik/validateFormik'
 import { getToken, postRequest } from '../../utilities/services'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clearCart } from '../../redux/slices/cartSlices'
 
 const FormPay = () => {
   const dispatch = useDispatch()
+  const userStore = useSelector((store) => store.user)
+  const { refreshToken } = userStore
+
   const { getFieldProps, handleSubmit, errors, touched } = useFormik({
     initialValues: initialValuesPay,
     onSubmit: async (values, { resetForm }) => {
-      const { token } = await getToken('/user/profile/')
+      const { token } = await getToken('/user/profile/', refreshToken)
       const newValues = { ...values, token }
       const { data } = await postRequest(newValues, '/pay/create-payment')
       if (data.init_point) {

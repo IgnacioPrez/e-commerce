@@ -4,7 +4,7 @@ import { PrivateRoutes, PublicRoutes } from '../../routes/routes'
 
 const AuthGuard = ({ privateValidation }) => {
   const userState = useSelector((store) => store.user)
-  return userState.id
+  return userState.refreshToken
     ? (
         privateValidation
           ? (
