@@ -13,7 +13,8 @@ export const postRequest = async (data, endpoint, token) => {
         Accept: 'application/json',
         'x-token': token
 
-      }
+      },
+      withCredentials: true
     })
     return result
   } catch (error) {
@@ -32,7 +33,8 @@ export const deleteFromCart = async (endpoint, id, token) => {
 
         'x-token': token,
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     })
     return
   } catch (error) {
