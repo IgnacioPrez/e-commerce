@@ -3,7 +3,7 @@ import './home.css'
 import { useEffect, useState } from 'react'
 import { useFilter } from '../../hooks/useFilter'
 import { Slide } from '../../components/slide-images/Slide'
-import { getRequest, postRequest } from '../../utilities/services'
+import { getToken, postRequest } from '../../utilities/services'
 import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { getAllProductsInCart } from '../../models/products.service'
@@ -15,7 +15,7 @@ function Home () {
   const dispatch = useDispatch()
 
   const resetCart = async () => {
-    const { token } = await getRequest('/user/profile/')
+    const { token } = await getToken('/user/profile/')
     if (token) {
       const data = await getAllProductsInCart(token)
       dispatch(getCart(data))
@@ -24,7 +24,7 @@ function Home () {
 
   useEffect(() => {
     const showProducts = async () => {
-      const { token } = await getRequest('/user/profile/')
+      const { token } = await getToken('/user/profile/')
       if (token) {
         const data = await getAllProductsInCart(token)
         dispatch(getCart(data))
@@ -34,18 +34,19 @@ function Home () {
   }, [])
 
   const addToCart = async (productId, quantity) => {
-    const { token } = await getRequest('/user/profile/')
-    console.log(token)
-    const valuesReq = { productId, quantity }
-    await toast.promise(
-      postRequest(valuesReq, '/cart/addInCart', token),
-      {
-        loading: 'Espere...',
-        success: <b>Se agregó correctamente!</b>,
-        error: <b>Ocurrio un problema.</b>
-      }
-    )
-    resetCart()
+    const { token } = await getToken('/user/profile/')
+    if (token) {
+      const valuesReq = { productId, quantity }
+      await toast.promise(
+        postRequest(valuesReq, '/cart/addInCart', token),
+        {
+          loading: 'Espere...',
+          success: <b>Se agregó correctamente!</b>,
+          error: <b>Ocurrio un problema.</b>
+        }
+      )
+      resetCart()
+    }
   }
   const changeFilter = (category) => {
     setFilter(category)

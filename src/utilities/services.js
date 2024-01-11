@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 
-// export const URL = import.meta.env.VITE_BASE_URL
-export const URL = 'http://localhost:8080'
+export const URL = import.meta.env.VITE_BASE_URL
 const { user } = JSON.parse(window.localStorage.getItem('persist:root'))
 const { refreshToken } = JSON.parse(user)
 
@@ -12,7 +11,8 @@ export const postRequest = async (data, endpoint, token) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`
+        'x-token': token
+
       }
     })
     return result
@@ -27,28 +27,28 @@ export const postRequest = async (data, endpoint, token) => {
 
 export const deleteFromCart = async (endpoint, id, token) => {
   try {
-    const response = await axios.post(`${URL}${endpoint}/${id}`, null, {
+    await axios.delete(`${URL}${endpoint}/${id}`, {
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`
+        'x-token': token,
+        'Content-Type': 'application/json'
       }
     })
-    return response
+    return
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
+      return error.response.status
     } else {
-      return 'Ocurrió un error inesperado'
+      return 'An unexpected error occurred'
     }
   }
 }
 
-export const getRequest = async (endpoint) => {
+export const getToken = async (endpoint) => {
   try {
     const { data } = await axios.get(URL + endpoint, {
       headers: {
-        Authorization: `Bearer ${refreshToken}`
+        'x-token': refreshToken,
+        'Content-Type': 'application/json'
       }
     })
     return data

@@ -25,7 +25,7 @@ export const getAllProductsInCart = async (token) => {
   try {
     const { data } = await axios.get(`${URL}/cart/`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        'x-token': token
       }
     })
     return data.cart
